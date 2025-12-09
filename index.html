@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Universo - Un Viaje Espacial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Pantalla de Inicio -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="stars-background"></div>
+        <div class="welcome-content">
+            <h2 class="birthday-greeting">Feliz Cumpleaños Morita</h2>
+            <h1 class="welcome-title">Bienvenida a tu viaje por nuestro universo</h1>
+            <p class="welcome-subtitle">Explora cada planeta y descubre los secretos que guardan</p>
+            <button id="explore-btn" class="explore-btn">Explorar</button>
+        </div>
+    </div>
+
+    <!-- Vista Principal del Sistema Solar -->
+    <div id="solar-system-view" class="solar-system-view hidden">
+        <div class="stars-background"></div>
+        
+        <!-- Control de Música de Fondo -->
+        <div class="background-music-control">
+            <button id="bg-music-toggle" class="bg-music-btn" title="Reproducir/Pausar música de fondo">
+                <span class="music-icon">🎵</span>
+                <span class="music-label">Música</span>
+            </button>
+            <audio id="background-music" loop>
+                <source src="music/feliz-cumpleanos.mp3" type="audio/mpeg">
+                Tu navegador no soporta audio.
+            </audio>
+        </div>
+        
+        <!-- Menú Lateral de Planetas -->
+        <aside class="planets-menu">
+            <h2 class="menu-title">Sistema Solar</h2>
+            <ul class="planets-list">
+                <li class="planet-item" data-planet="sun">
+                    <div class="planet-icon sun-icon"></div>
+                    <span class="planet-name">Sol</span>
+                </li>
+                <li class="planet-item" data-planet="mercury">
+                    <div class="planet-icon mercury-icon"></div>
+                    <span class="planet-name">Mercurio</span>
+                </li>
+                <li class="planet-item" data-planet="venus">
+                    <div class="planet-icon venus-icon"></div>
+                    <span class="planet-name">Venus</span>
+                </li>
+                <li class="planet-item" data-planet="earth">
+                    <div class="planet-icon earth-icon"></div>
+                    <span class="planet-name">Tierra</span>
+                </li>
+                <li class="planet-item" data-planet="mars">
+                    <div class="planet-icon mars-icon"></div>
+                    <span class="planet-name">Marte</span>
+                </li>
+                <li class="planet-item" data-planet="jupiter">
+                    <div class="planet-icon jupiter-icon"></div>
+                    <span class="planet-name">Júpiter</span>
+                </li>
+                <li class="planet-item" data-planet="saturn">
+                    <div class="planet-icon saturn-icon"></div>
+                    <span class="planet-name">Saturno</span>
+                </li>
+                <li class="planet-item" data-planet="uranus">
+                    <div class="planet-icon uranus-icon"></div>
+                    <span class="planet-name">Urano</span>
+                </li>
+                <li class="planet-item" data-planet="neptune">
+                    <div class="planet-icon neptune-icon"></div>
+                    <span class="planet-name">Neptuno</span>
+                </li>
+                <li class="planet-item" data-planet="moon">
+                    <div class="planet-icon moon-icon"></div>
+                    <span class="planet-name">Luna</span>
+                </li>
+                <li class="planet-item" data-planet="eclipse">
+                    <div class="planet-icon eclipse-icon"></div>
+                    <span class="planet-name">Eclipse</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Área Principal -->
+        <main class="main-content">
+            <div class="solar-system-container">
+                <div class="solar-system-visual" id="solar-system-visual">
+                    <!-- Vista inicial -->
+                    <div class="initial-view" id="initial-view">
+                        <h2 class="main-title">Selecciona un planeta para comenzar</h2>
+                    </div>
+                    
+                    <!-- Vista del planeta seleccionado -->
+                    <div class="planet-view hidden" id="planet-view">
+                        <div class="planet-display">
+                            <div class="planet-label">
+                                <span class="label-text">SOLAR EXPLORER</span>
+                                <h2 class="planet-title-large" id="planet-title-large"></h2>
+                            </div>
+                            <div class="planet-visual-large" id="planet-visual"></div>
+                        </div>
+                        
+                        <div class="planet-info">
+                            <p class="planet-message" id="planet-message"></p>
+                            
+                            <div class="music-section">
+                                <h3 class="music-title">Tu Canción Especial</h3>
+                                <div class="music-player" id="music-player">
+                                    <!-- El reproductor se inserta aquí -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Pantalla Final -->
+    <div id="final-screen" class="final-screen hidden">
+        <div class="stars-background"></div>
+        <div class="final-content">
+            <h1 class="final-title">Gracias por este viaje</h1>
+            <div class="final-message" id="final-message">
+                <!-- Mensaje final personalizado -->
+            </div>
+            <button id="restart-btn" class="restart-btn">Volver al inicio</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

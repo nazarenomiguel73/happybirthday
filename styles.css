@@ -1,0 +1,1344 @@
+/* ============================================
+   RESET Y VARIABLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0a0f;
+    --bg-space: #0f0f1e;
+    --star-color: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8d4;
+    --accent-gold: #ffd700;
+    --accent-blue: #4a9eff;
+    --glow-sun: #ffaa00;
+    --glow-mercury: #8c7853;
+    --glow-venus: #ffc649;
+    --glow-earth: #4a9eff;
+    --glow-mars: #cd5c5c;
+    --glow-jupiter: #d8ca9d;
+    --glow-saturn: #fad5a5;
+    --glow-uranus: #4fd0e7;
+    --glow-neptune: #4166f5;
+    --glow-moon: #c0c0c0;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevenir zoom en inputs en iOS */
+input, textarea, select {
+    font-size: 16px;
+}
+
+/* ============================================
+   FONDO DE ESTRELLAS
+   ============================================ */
+
+.stars-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+}
+
+.stars-background::before,
+.stars-background::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--star-color);
+    border-radius: 50%;
+    box-shadow: 
+        100px 200px 0 0 var(--star-color),
+        300px 100px 0 0 var(--star-color),
+        500px 300px 0 0 var(--star-color),
+        700px 150px 0 0 var(--star-color),
+        900px 250px 0 0 var(--star-color),
+        1100px 80px 0 0 var(--star-color),
+        1300px 320px 0 0 var(--star-color),
+        1500px 180px 0 0 var(--star-color),
+        200px 400px 0 0 var(--star-color),
+        400px 500px 0 0 var(--star-color),
+        600px 450px 0 0 var(--star-color),
+        800px 550px 0 0 var(--star-color),
+        1000px 480px 0 0 var(--star-color),
+        1200px 600px 0 0 var(--star-color),
+        1400px 520px 0 0 var(--star-color),
+        50px 600px 0 0 var(--star-color),
+        250px 700px 0 0 var(--star-color),
+        450px 650px 0 0 var(--star-color),
+        650px 750px 0 0 var(--star-color),
+        850px 680px 0 0 var(--star-color),
+        1050px 800px 0 0 var(--star-color),
+        1250px 720px 0 0 var(--star-color),
+        1450px 780px 0 0 var(--star-color);
+    animation: twinkle 3s infinite;
+}
+
+.stars-background::after {
+    animation-delay: 1.5s;
+    box-shadow: 
+        150px 250px 0 0 var(--star-color),
+        350px 150px 0 0 var(--star-color),
+        550px 350px 0 0 var(--star-color),
+        750px 200px 0 0 var(--star-color),
+        950px 300px 0 0 var(--star-color),
+        1150px 130px 0 0 var(--star-color),
+        1350px 370px 0 0 var(--star-color),
+        1550px 230px 0 0 var(--star-color),
+        180px 450px 0 0 var(--star-color),
+        380px 550px 0 0 var(--star-color),
+        580px 500px 0 0 var(--star-color),
+        780px 600px 0 0 var(--star-color),
+        980px 530px 0 0 var(--star-color),
+        1180px 650px 0 0 var(--star-color),
+        1380px 570px 0 0 var(--star-color),
+        80px 650px 0 0 var(--star-color),
+        280px 750px 0 0 var(--star-color),
+        480px 700px 0 0 var(--star-color),
+        680px 800px 0 0 var(--star-color),
+        880px 730px 0 0 var(--star-color),
+        1080px 850px 0 0 var(--star-color),
+        1280px 770px 0 0 var(--star-color),
+        1480px 830px 0 0 var(--star-color);
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============================================
+   PANTALLA DE BIENVENIDA
+   ============================================ */
+
+.welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.welcome-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.welcome-content {
+    text-align: center;
+    z-index: 1;
+    animation: fadeInUp 1s ease;
+}
+
+.birthday-greeting {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.welcome-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #b8b8d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+}
+
+.explore-btn {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, #6b5bff 100%);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.explore-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(74, 158, 255, 0.5);
+}
+
+.explore-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   VISTA DEL SISTEMA SOLAR
+   ============================================ */
+
+.solar-system-view {
+    position: relative;
+    min-height: 100vh;
+    padding: 2rem;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+.solar-system-view.hidden {
+    display: none;
+}
+
+/* ============================================
+   CONTROL DE MÚSICA DE FONDO
+   ============================================ */
+
+.background-music-control {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bg-music-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(15, 15, 30, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bg-music-btn:hover {
+    background: rgba(15, 15, 30, 0.95);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+.bg-music-btn.playing {
+    background: rgba(74, 158, 255, 0.2);
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+}
+
+.bg-music-btn.playing .music-icon {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.music-icon {
+    font-size: 1.2rem;
+    display: inline-block;
+}
+
+.music-label {
+    font-weight: 400;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+#background-music {
+    display: none;
+}
+
+/* ============================================
+   MENÚ LATERAL DE PLANETAS
+   ============================================ */
+
+.planets-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem 0;
+    z-index: 100;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: transform 0.3s ease;
+    -webkit-overflow-scrolling: touch;
+}
+
+.menu-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0 1.5rem;
+}
+
+.planets-list {
+    list-style: none;
+}
+
+.planet-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.72rem 1.8rem;
+    margin-bottom: 0;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+    border: none;
+    position: relative;
+}
+
+.planet-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.planet-item.active {
+    background: rgba(74, 158, 255, 0.25);
+}
+
+.planet-item.active .planet-name {
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+.planet-icon {
+    width: 9.6px;
+    height: 9.6px;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: none;
+}
+
+/* Cuando hay imagen, mantener el estilo pero permitir que la imagen se vea */
+.planet-icon[style*="background-image"] {
+    border: none;
+    box-shadow: none;
+}
+
+.planet-item:hover .planet-icon {
+    transform: scale(1);
+}
+
+.planet-name {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.02rem;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+/* Iconos de Planetas - Estilo minimalista como en la imagen */
+.sun-icon {
+    background: #ffaa00;
+    box-shadow: 0 0 4px rgba(255, 170, 0, 0.6);
+}
+
+.mercury-icon {
+    background: #8c7853;
+}
+
+.venus-icon {
+    background: #ffc649;
+}
+
+.earth-icon {
+    background: #4a9eff;
+}
+
+.mars-icon {
+    background: #cd5c5c;
+}
+
+.jupiter-icon {
+    background: #d8ca9d;
+}
+
+.saturn-icon {
+    background: #fad5a5;
+}
+
+.saturn-icon::after {
+    display: none; /* Ocultar anillos en el menú */
+}
+
+.uranus-icon {
+    background: #4fd0e7;
+}
+
+.neptune-icon {
+    background: #4166f5;
+}
+
+.moon-icon {
+    background: #c0c0c0;
+}
+
+.eclipse-icon {
+    background: #2a1a3d;
+    box-shadow: 0 0 4px rgba(255, 200, 0, 0.4);
+}
+
+.eclipse-icon::before {
+    display: none; /* Ocultar efecto especial en el menú */
+}
+
+.eclipse-icon {
+    background: radial-gradient(circle, #2a1a3d 0%, #1a0f2e 50%, #000000 100%);
+    box-shadow: 0 0 20px rgba(255, 200, 0, 0.5), 
+                0 0 40px rgba(255, 150, 0, 0.3),
+                inset 0 0 30px rgba(255, 200, 0, 0.2);
+    position: relative;
+}
+
+.eclipse-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffc800 0%, #ff9500 50%, transparent 100%);
+    box-shadow: 0 0 20px rgba(255, 200, 0, 0.8);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   CONTENIDO PRINCIPAL
+   ============================================ */
+
+.main-content {
+    margin-left: 200px;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.solar-system-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.solar-system-visual {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 2rem;
+}
+
+.initial-view {
+    text-align: center;
+}
+
+.main-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.planet-view {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem;
+    padding-top: 3rem;
+    animation: fadeIn 0.5s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.planet-view.hidden {
+    display: none;
+}
+
+.initial-view.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.planet-display {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    z-index: 1;
+}
+
+.planet-label {
+    text-align: center;
+    margin-bottom: 2rem;
+    z-index: 10;
+    position: relative;
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.label-text {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.planet-title-large {
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Estilos del modal eliminados - ahora usamos vista directa */
+
+.planet-visual-large {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+    border: none;
+    transform-style: preserve-3d;
+    z-index: 1;
+    margin-top: 1rem;
+}
+
+/* Estilos específicos para cada planeta cuando está en tamaño grande */
+.planet-visual-large.sun-icon {
+    background: radial-gradient(circle, #ffaa00 0%, #ff6600 100%) !important;
+    box-shadow: 0 0 100px var(--glow-sun), 
+                0 0 200px rgba(255, 170, 0, 0.4),
+                0 0 300px rgba(255, 170, 0, 0.2) !important;
+    animation: float 6s ease-in-out infinite, rotate 20s linear infinite;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.mercury-icon {
+    background: radial-gradient(circle, #8c7853 0%, #5a4a35 100%) !important;
+    box-shadow: 0 0 80px var(--glow-mercury), 
+                0 0 150px rgba(140, 120, 83, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.venus-icon {
+    background: radial-gradient(circle, #ffc649 0%, #ff9500 100%) !important;
+    box-shadow: 0 0 80px var(--glow-venus), 
+                0 0 150px rgba(255, 198, 73, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.earth-icon {
+    background: radial-gradient(circle, #4a9eff 0%, #1e5fcc 100%) !important;
+    box-shadow: 0 0 80px var(--glow-earth), 
+                0 0 150px rgba(74, 158, 255, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.mars-icon {
+    background: radial-gradient(circle, #cd5c5c 0%, #8b3a3a 100%) !important;
+    box-shadow: 0 0 80px var(--glow-mars), 
+                0 0 150px rgba(205, 92, 92, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.jupiter-icon {
+    background: linear-gradient(135deg, #d8ca9d 0%, #b8a082 50%, #9d8a6b 100%) !important;
+    box-shadow: 0 0 100px var(--glow-jupiter), 
+                0 0 200px rgba(216, 202, 157, 0.3) !important;
+    animation: float 6s ease-in-out infinite, rotate 15s linear infinite;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.saturn-icon {
+    background: radial-gradient(circle, #fad5a5 0%, #e6c085 100%) !important;
+    box-shadow: 0 0 100px var(--glow-saturn), 
+                0 0 200px rgba(250, 213, 165, 0.3) !important;
+    position: relative;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.saturn-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 8px;
+    background: rgba(250, 213, 165, 0.4);
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(250, 213, 165, 0.5);
+}
+
+.planet-visual-large.uranus-icon {
+    background: radial-gradient(circle, #4fd0e7 0%, #2a9fc4 100%) !important;
+    box-shadow: 0 0 80px var(--glow-uranus), 
+                0 0 150px rgba(79, 208, 231, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.neptune-icon {
+    background: radial-gradient(circle, #4166f5 0%, #2a4ac4 100%) !important;
+    box-shadow: 0 0 80px var(--glow-neptune), 
+                0 0 150px rgba(65, 102, 245, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.moon-icon {
+    background: radial-gradient(circle, #c0c0c0 0%, #808080 100%) !important;
+    box-shadow: 0 0 80px var(--glow-moon), 
+                0 0 150px rgba(192, 192, 192, 0.3) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.planet-visual-large.eclipse-icon {
+    background: radial-gradient(circle, #2a1a3d 0%, #1a0f2e 50%, #000000 100%) !important;
+    box-shadow: 0 0 120px rgba(255, 200, 0, 0.6), 
+                0 0 200px rgba(255, 150, 0, 0.4),
+                0 0 300px rgba(255, 200, 0, 0.2) !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    position: relative;
+}
+
+.planet-visual-large.eclipse-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffc800 0%, #ff9500 50%, transparent 100%);
+    box-shadow: 0 0 60px rgba(255, 200, 0, 0.9),
+                0 0 120px rgba(255, 200, 0, 0.6);
+}
+
+/* Cuando hay imagen, mantener el estilo pero permitir que la imagen se vea */
+.planet-visual-large.has-image {
+    box-shadow: 0 0 100px rgba(255, 255, 255, 0.2), 
+                0 0 200px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Prioridad para imágenes sobre estilos de iconos - desactivar backgrounds de iconos cuando hay imagen */
+.planet-visual-large.has-image.sun-icon,
+.planet-visual-large.has-image.mercury-icon,
+.planet-visual-large.has-image.venus-icon,
+.planet-visual-large.has-image.earth-icon,
+.planet-visual-large.has-image.mars-icon,
+.planet-visual-large.has-image.jupiter-icon,
+.planet-visual-large.has-image.saturn-icon,
+.planet-visual-large.has-image.uranus-icon,
+.planet-visual-large.has-image.neptune-icon,
+.planet-visual-large.has-image.moon-icon,
+.planet-visual-large.has-image.eclipse-icon {
+    background: none !important;
+    background-image: inherit !important;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.planet-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.planet-info {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+.planet-message {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    text-align: justify;
+    font-weight: 300;
+}
+
+.music-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.music-title {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--accent-gold);
+}
+
+.music-player {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.music-player iframe {
+    width: 100%;
+    height: 152px;
+    border: none;
+    border-radius: 12px;
+}
+
+.music-player audio {
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem;
+}
+
+.music-player audio::-webkit-media-controls-panel {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.music-player a {
+    display: block;
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.music-player a:hover {
+    color: var(--accent-gold);
+    text-decoration: underline;
+}
+
+/* ============================================
+   PANTALLA FINAL
+   ============================================ */
+
+.final-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.final-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.final-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+    z-index: 1;
+    animation: fadeInUp 1s ease;
+}
+
+.final-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.final-message {
+    font-size: 1.2rem;
+    line-height: 2;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    text-align: justify;
+}
+
+.restart-btn {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--accent-blue) 0%, #6b5bff 100%);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(74, 158, 255, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Ajustes del control de música en diferentes tamaños */
+@media (max-width: 1024px) {
+    .background-music-control {
+        top: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .bg-music-btn {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+    .planets-menu {
+        width: 180px;
+    }
+
+    .main-content {
+        margin-left: 180px;
+    }
+
+    .planet-visual-large {
+        width: 350px;
+        height: 350px;
+    }
+
+    .planet-title-large {
+        font-size: 2.5rem;
+    }
+}
+
+/* Tablets pequeñas */
+@media (max-width: 768px) {
+    .background-music-control {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .bg-music-btn {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .music-label {
+        display: none; /* Ocultar texto en móviles, solo mostrar icono */
+    }
+    .planets-menu {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        z-index: 200;
+    }
+
+    .menu-title {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+        text-align: center;
+    }
+
+    .planets-list {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .planets-list::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .planet-item {
+        flex-direction: column;
+        padding: 0.5rem 0.75rem;
+        margin-bottom: 0;
+        min-width: 80px;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        flex-shrink: 0;
+    }
+
+    .planet-item.active {
+        border-left: none;
+        border-bottom-color: var(--accent-blue);
+    }
+
+    .planet-name {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .planet-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        margin-top: 200px;
+        padding: 0;
+        min-height: calc(100vh - 200px);
+    }
+
+    .solar-system-container {
+        height: calc(100vh - 200px);
+    }
+
+    .main-title {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .planet-view {
+        padding: 1.5rem 1rem;
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+    .planet-display {
+        margin-bottom: 2rem;
+    }
+
+    .planet-title-large {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .label-text {
+        font-size: 0.7rem;
+    }
+
+    .planet-visual-large {
+        width: 280px;
+        height: 280px;
+    }
+
+    .planet-message {
+        font-size: 0.95rem;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    .planet-info {
+        padding: 0;
+        max-width: 100%;
+    }
+
+    .music-section {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+
+    .music-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 480px) {
+    .planets-menu {
+        max-height: 180px;
+        padding: 0.75rem;
+    }
+
+    .menu-title {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .planet-item {
+        padding: 0.4rem 0.6rem;
+        min-width: 70px;
+    }
+
+    .planet-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .planet-name {
+        font-size: 0.65rem;
+    }
+
+    .main-content {
+        margin-top: 180px;
+        min-height: calc(100vh - 180px);
+    }
+
+    .solar-system-container {
+        height: calc(100vh - 180px);
+    }
+
+    .welcome-title {
+        font-size: 1.75rem;
+        padding: 0 1rem;
+    }
+
+    .welcome-subtitle {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    .explore-btn {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+
+    .planet-title-large {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+
+    .label-text {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+    }
+
+    .planet-visual-large {
+        width: 220px;
+        height: 220px;
+    }
+
+    .planet-message {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .planet-view {
+        padding: 1rem 0.75rem;
+    }
+
+    .music-player iframe {
+        height: 120px;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 360px) {
+    .planets-menu {
+        max-height: 160px;
+        padding: 0.5rem;
+    }
+
+    .planet-item {
+        padding: 0.35rem 0.5rem;
+        min-width: 60px;
+    }
+
+    .planet-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .planet-name {
+        font-size: 0.6rem;
+    }
+
+    .main-content {
+        margin-top: 160px;
+        min-height: calc(100vh - 160px);
+    }
+
+    .solar-system-container {
+        height: calc(100vh - 160px);
+    }
+
+    .planet-visual-large {
+        width: 180px;
+        height: 180px;
+    }
+
+    .planet-title-large {
+        font-size: 1.3rem;
+    }
+
+    .planet-message {
+        font-size: 0.85rem;
+    }
+}
+
+/* Orientación horizontal en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+    .planets-menu {
+        max-height: 120px;
+        padding: 0.5rem;
+    }
+
+    .menu-title {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .planet-item {
+        padding: 0.3rem 0.5rem;
+        min-width: 70px;
+    }
+
+    .planet-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .planet-name {
+        font-size: 0.65rem;
+    }
+
+    .main-content {
+        margin-top: 120px;
+        min-height: calc(100vh - 120px);
+    }
+
+    .solar-system-container {
+        height: calc(100vh - 120px);
+    }
+
+    .planet-visual-large {
+        width: 200px;
+        height: 200px;
+    }
+
+    .planet-view {
+        padding: 1rem;
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    .planet-display {
+        margin-bottom: 0;
+    }
+
+    .planet-info {
+        flex: 1;
+    }
+}
+
+/* Ajustes para pantalla final en móviles */
+@media (max-width: 768px) {
+    .final-content {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    .final-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .final-message {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+
+    .restart-btn {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .final-content {
+        padding: 1rem;
+    }
+
+    .final-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .final-message {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .restart-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (max-width: 768px) {
+    .planet-item {
+        min-height: 44px; /* Tamaño mínimo recomendado para áreas táctiles */
+    }
+
+    .explore-btn,
+    .restart-btn {
+        min-height: 44px;
+        min-width: 120px;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
